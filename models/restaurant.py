@@ -3,9 +3,12 @@ class Restaurant:
         self.name = name
         self.category = category
         self.active = False
+    
+    def __str__(self):
+        return f'{self.name} | {self.category}'
 
 restaurant_hamburguer = Restaurant('Hamburguer', 'Gourmet')
 restaurant_pizza = Restaurant('Pizza', 'Italiana')
 
-print (vars(restaurant_hamburguer))
-print (vars(restaurant_pizza))
+print (restaurant_hamburguer)
+print (restaurant_pizza)

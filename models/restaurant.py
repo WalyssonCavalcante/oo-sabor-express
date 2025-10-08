@@ -1,25 +1,23 @@
 class Restaurant:
     restaurants = []
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        self._name = name.title()
+        self._category = category
         self._active = False
         Restaurant.restaurants.append(self)
     
     def __str__(self):
-        return f'{self.name} | {self.category}'
+        return f'{self._name} | {self._category}'
     
-    def list_restaurants():
+    @classmethod
+    def list_restaurants(cls):
         print(f'{"Nome do Restaurante".ljust(25)} | {"Categoria".ljust(25)} | {"Status"}')
-        for restaurant in Restaurant.restaurants:
-            print(f'{restaurant.name.ljust(25)} | {restaurant.category.ljust(25)} | {restaurant.active}')
+        for restaurant in cls.restaurants:
+            print(f'{restaurant._name.ljust(25)} | {restaurant._category.ljust(25)} | {restaurant.active}')
 
     @property
     def active(self):
         return 'True ✅' if self._active else 'False ❌'
-
-
-restaurant_hamburguer = Restaurant('Hamburguer', 'Gourmet')
-restaurant_pizza = Restaurant('Pizza', 'Italiana')
-
-Restaurant.list_restaurants()
+    
+    def toggle_state(self):
+        self._active = not self._active

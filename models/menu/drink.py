@@ -7,3 +7,6 @@ class Drink(ItemMenu  ):
 
     def __str__(self):
         return self._name
+    
+    def apply_discount(self):
+        self._preco -= (self._preco * 0.08)

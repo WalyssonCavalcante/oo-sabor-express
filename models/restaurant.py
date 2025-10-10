@@ -1,4 +1,5 @@
 from models.rating import Rating
+from models.menu.item_menu import ItemMenu
 
 class Restaurant:
     restaurants = []
@@ -7,6 +8,7 @@ class Restaurant:
         self._category = category
         self._active = False
         self._rating = []
+        self._menu = []
         Restaurant.restaurants.append(self)
     
     def __str__(self):
@@ -26,14 +28,28 @@ class Restaurant:
         self._active = not self._active
 
     def receive_rating(self, client, note):
-        rating = Rating(client, note)
-        self._rating.append(rating)
+        if 0 < note <= 5:
+            rating = Rating(client, note)
+            self._rating.append(rating)
     
     @property
     def media_rating(self):
         if not self._rating:
-            return 0
+            return '-'
         sum_notes = sum(rating._note for rating in self._rating)
         number_notes = len(self._rating)
         average = round(sum_notes / number_notes, 1)
         return average 
+    
+    def add_menu(self, item):
+        if isinstance(item,ItemMenu):
+            self._menu.append(item)
+    def show_menu(self):
+        print(f'Cardapio do restaurante {self._name}\n')
+        for i, item in enumerate(self._menu, start=1):
+            if hasattr(item,'description'):
+                message_dish = f'{i}. Nome:{item._name} | Preço: R$ {item._price} | Descrição: {item.description}'
+                print(message_dish)
+            else:
+                message_drink = f'{i}. Nome:{item._name} | Preço: R$ {item._price} | Tamanho: {item.size}'
+                print(message_drink)
